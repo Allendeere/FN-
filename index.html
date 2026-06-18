@@ -1,109 +1,239 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
-  <head>
-    <meta charset="utf-8" />
-    <title>FN洋蔥</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes" />
-    <style>
-      html, body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        overflow: hidden;
-        background: black;
-      }
-      #unity-container {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      canvas {
-        width: 100% !important;
-        height: 100% !important;
-      }
-      #unity-loading-bar {
-        position: absolute;
-        bottom: 10px;
-        left: 10px;
-        width: 200px;
-        height: 10px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 5px;
-        overflow: hidden;
-        display: none;
-      }
-      #unity-progress-bar-full {
-        height: 100%;
-        background: #4af;
-        width: 0%;
-        transition: width 0.2s;
-      }
-      #unity-warning {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        color: white;
-        font-size: 14px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="unity-container">
-      <canvas id="unity-canvas" tabindex="-1"></canvas>
-      <div id="unity-loading-bar">
-        <div id="unity-progress-bar-full"></div>
-      </div>
-      <div id="unity-warning"></div>
-    </div>
-    <script>
-      const buildUrl = "Build";
-      const loaderUrl = buildUrl + "/Build.loader.js";
 
-      const config = {
-        dataUrl: buildUrl + "/Build.data",
-        frameworkUrl: buildUrl + "/Build.framework.js",
-        codeUrl: buildUrl + "/Build.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "FN洋蔥",
-        productVersion: "1.0",
-        showBanner: function (msg, type) {
-          const warningBanner = document.getElementById("unity-warning");
-          const div = document.createElement("div");
-          div.textContent = msg;
-          div.style = type === "error" ? "background: red; padding: 5px;" : "background: yellow; padding: 5px;";
-          warningBanner.appendChild(div);
-          if (type === "warning") {
-            setTimeout(() => {
-              warningBanner.removeChild(div);
-            }, 5000);
-          }
-        }
-      };
+<head>
 
-      const canvas = document.querySelector("#unity-canvas");
-      const loadingBar = document.querySelector("#unity-loading-bar");
-      const progressBarFull = document.querySelector("#unity-progress-bar-full");
+<meta charset="utf-8">
 
-      loadingBar.style.display = "block";
+<title>Sword Wormer</title>
 
-      const script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          progressBarFull.style.width = 100 * progress + "%";
-        }).then(() => {
-          loadingBar.style.display = "none";
-        }).catch((message) => {
-          alert("Unity 載入錯誤：" + message);
-        });
-      };
-      document.body.appendChild(script);
-    </script>
-  </body>
+<meta name="viewport"
+content="width=device-width,initial-scale=1,user-scalable=no,shrink-to-fit=yes">
+
+<style>
+
+html,body
+{
+margin:0;
+padding:0;
+height:100%;
+overflow:hidden;
+background:black;
+}
+
+#unity-container
+{
+width:100%;
+height:100%;
+position:fixed;
+top:0;
+left:0;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+}
+
+#unity-canvas
+{
+width:100%!important;
+
+height:100%!important;
+}
+
+#unity-loading-bar
+{
+position:absolute;
+
+bottom:10px;
+
+left:10px;
+
+width:200px;
+
+height:10px;
+
+display:none;
+
+background:
+rgba(255,255,255,.2);
+
+border-radius:5px;
+
+overflow:hidden;
+}
+
+#unity-progress-bar-full
+{
+height:100%;
+
+width:0%;
+
+background:#4af;
+}
+
+#unity-warning
+{
+position:absolute;
+
+top:10px;
+
+left:10px;
+
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="unity-container">
+
+<canvas
+id="unity-canvas"
+tabindex="-1">
+</canvas>
+
+<div id="unity-loading-bar">
+
+<div id="unity-progress-bar-full">
+
+</div>
+
+</div>
+
+<div id="unity-warning">
+
+</div>
+
+</div>
+
+<script>
+
+const buildUrl='Build';
+
+const config=
+{
+dataUrl:
+buildUrl+'/Web.data',
+
+frameworkUrl:
+buildUrl+'/Web.framework.js',
+
+codeUrl:
+buildUrl+'/Web.wasm',
+
+streamingAssetsUrl:
+'StreamingAssets',
+
+companyName:
+'DefaultCompany',
+
+productName:
+'Sword Wormer',
+
+productVersion:
+'1.0',
+
+showBanner:
+function(msg,type)
+{
+const warning=
+document.getElementById(
+'unity-warning');
+
+const div=
+document.createElement(
+'div');
+
+div.textContent=
+msg;
+
+div.style=
+type==='error'
+?
+'background:red;padding:5px;'
+:
+'background:yellow;padding:5px;';
+
+warning.appendChild(
+div);
+
+if(type==='warning')
+{
+setTimeout(
+()=>div.remove(),
+5000
+);
+}
+}
+};
+
+const canvas=
+document.querySelector(
+'#unity-canvas'
+);
+
+const loadingBar=
+document.querySelector(
+'#unity-loading-bar'
+);
+
+const progressBar=
+document.querySelector(
+'#unity-progress-bar-full'
+);
+
+loadingBar.style.display=
+'block';
+
+const script=
+document.createElement(
+'script'
+);
+
+script.src=
+buildUrl+
+'/Web.loader.js';
+
+script.onload=()=>
+{
+createUnityInstance(
+canvas,
+config,
+(progress)=>
+{
+progressBar.style.width=
+(progress*100)
++'%';
+}
+)
+.then(()=>
+{
+loadingBar.style.display=
+'none';
+})
+.catch((message)=>
+{
+alert(
+'Unity 載入失敗\\n'+
+message
+);
+});
+};
+
+document.body
+.appendChild(
+script
+);
+
+</script>
+
+</body>
+
 </html>
