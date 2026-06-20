@@ -1994,13 +1994,13 @@ var tempI64;
 // === Body ===
 
 var ASM_CONSTS = {
-  4861184: function() {return Module.webglContextAttributes.premultipliedAlpha;},  
- 4861245: function() {return Module.webglContextAttributes.preserveDrawingBuffer;},  
- 4861309: function() {return Module.webglContextAttributes.powerPreference;},  
- 4861367: function() {Module['emscripten_get_now_backup'] = performance.now;},  
- 4861422: function($0) {performance.now = function() { return $0; };},  
- 4861470: function($0) {performance.now = function() { return $0; };},  
- 4861518: function() {performance.now = Module['emscripten_get_now_backup'];}
+  4861824: function() {return Module.webglContextAttributes.premultipliedAlpha;},  
+ 4861885: function() {return Module.webglContextAttributes.preserveDrawingBuffer;},  
+ 4861949: function() {return Module.webglContextAttributes.powerPreference;},  
+ 4862007: function() {Module['emscripten_get_now_backup'] = performance.now;},  
+ 4862062: function($0) {performance.now = function() { return $0; };},  
+ 4862110: function($0) {performance.now = function() { return $0; };},  
+ 4862158: function() {performance.now = Module['emscripten_get_now_backup'];}
 };
 
 
@@ -5326,6 +5326,11 @@ var ASM_CONSTS = {
 
   function _StartMicrophone() {
   
+          if (window.unityMicStartRequested)
+              return;
+  
+          window.unityMicStartRequested = true;
+  
           navigator.mediaDevices.getUserMedia({
               audio: true
           })
@@ -5335,7 +5340,12 @@ var ASM_CONSTS = {
                   window.AudioContext || window.webkitAudioContext;
   
               const audioContext =
-                  new AudioContext();
+                  window.unityMicAudioContext || new AudioContext();
+  
+              window.unityMicAudioContext = audioContext;
+  
+              if (audioContext.state === "suspended")
+                  audioContext.resume();
   
               const analyser =
                   audioContext.createAnalyser();
@@ -5350,6 +5360,7 @@ var ASM_CONSTS = {
               window.unityMicAnalyser = analyser;
           })
           .catch(err => {
+              window.unityMicStartRequested = false;
               console.error(err);
           });
       }
